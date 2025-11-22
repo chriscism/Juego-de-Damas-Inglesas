@@ -23,6 +23,7 @@ typedef struct casilla {
     
 void imprimir_tablero(casilla_t tablero[8][8]);
 void inicializar_tablero(casilla_t tablero[8][8]);
+void mostrarCreditos();
 int menu();
 bool validarNombres(char *nombre);
 
@@ -66,6 +67,7 @@ int main(){
     inicializar_tablero(tablero);
 
     int turno = 1; // 1 para jugador 1, 2 para jugador 2
+    // con esto controlamos que siga el juego
     bool juegoActivo = true;
     
     while(juegoActivo) {
@@ -77,7 +79,7 @@ int main(){
         } else {
             printf("\nTurno de %s\n", nombre2);
         }
-
+        // para ir cambiando de turno, si es 1 se vuelve 2, si es 2 se vuelve uno
         if(turno == 1){
           turno = 2;
         }else{
@@ -87,10 +89,14 @@ int main(){
 
       break;
     case 2:
+      system("clear");
+      mostrarCreditos();
       break;
     case 3:
       break;
     case 4:
+      printf("Saliendo . . .");
+      system("clear");
       break;
   }
 }
@@ -209,4 +215,12 @@ bool validarNombres(char *nombre){
         }
     }
     return true;
+}
+
+void mostrarCreditos(){
+   printf("====== CREDITOS =====\n");
+  printf("Desarrollado por:\n");
+  printf("Guillen Molina Angel Andres\n");
+  printf("Morales Barajas Cristhian Michelle\n");
+  printf("Los queremos mucho gracias a todos:)\n");
 }
