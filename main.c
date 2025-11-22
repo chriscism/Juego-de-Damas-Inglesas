@@ -1,4 +1,4 @@
-#include <stdbool.h>
+e#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -10,16 +10,29 @@
 #define YELLOW "\033[0;33m"
 #define WHITE "\033[0;37m"
 
-typedef struct ficha {
+/*Estructuras de Datos*/
+typedef struct{
+  char nombre[50];
   char color[11];
-  int tipo; // 0 peon, 1 coronada
+  int fichas_restantes;
+} jugador_t;
+
+typedef struct{
+  int tipo; /*0 peon,1 dama*/
+  char color[11];
 } ficha_t;
 
-typedef struct casilla {
+typedef struct{
   char color[11];
   bool ocupada;
   ficha_t ficha;
 } casilla_t;
+
+typedef struct{
+  char nombre[50];
+  char color[11];
+  int fichas_restantes;
+} victoria_t;
     
 void imprimir_tablero(casilla_t tablero[8][8]);
 void inicializar_tablero(casilla_t tablero[8][8]);
