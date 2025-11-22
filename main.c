@@ -1,6 +1,9 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #define RED "\033[0;31m"
 #define BLUE "\033[0;34m"
@@ -20,11 +23,59 @@ typedef struct casilla {
     
 void imprimir_tablero(casilla_t tablero[8][8]);
 void inicializar_tablero(casilla_t tablero[8][8]);
+int menu();
+bool validarNombres(char *nombre);
+
 int main(){
-  
+  int opcion = menu();
+  char nombre1[20];
+  char nombre2[20];
+  bool esValido;
+  switch(opcion){
+    case 1:
+    system("clear");
+    while (getchar() != '\n');
+      do{
+        printf("Nombre del jugador 1: ");
+        fgets(nombre1, 20, stdin);
+        nombre1[strlen(nombre1) - 1] = '\0'; // elimino el salto de linea
+        esValido = validarNombres(nombre1);
+        if(!esValido){
+          printf("El nombre solo debe tener letras y numeros.\n");
+        }
+      }while(!esValido);
+
+      system("clear");
+      do{
+        printf("Nombre del jugador 2: ");
+        fgets(nombre2, 20, stdin);
+        nombre2[strlen(nombre2) - 1] = '\0'; // elimino el salto de linea
+        esValido = validarNombres(nombre2);
+        if(!esValido){
+          printf("El nombre solo debe tener letras y numeros.\n");
+        }
+
+        if(strcmp(nombre1, nombre2) == 0){
+          printf("Los nombres no pueden repetirse.\n");
+        }
+      }while(!esValido || strcmp(nombre1, nombre2) == 0);
+
+      // ya que los nombres se validan correctamente se muestra el tablero
+      system("clear");
+      casilla_t tablero[8][8];
+    inicializar_tablero(tablero);
+
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+  }
 }
 
-void inicializar_tablero(casilla_t tablero[8][8]) {
+void inicializar_tablero(casilla_t tablero[8][8]){
   ficha_t ficha_jugador1 = {RED};
   ficha_t ficha_jugador2 = {BLUE};
   casilla_t casilla_aux;
@@ -76,7 +127,8 @@ void inicializar_tablero(casilla_t tablero[8][8]) {
   imprimir_tablero(tablero);
 }
 
-void imprimir_tablero(casilla_t tablero[8][8]) {
+void imprimir_tablero(casilla_t tablero[8][8]){
+
   // Cambiar al color correspondiente
   for (int j = 0; j < 8; j++) {
     printf("    %d  ", j);
@@ -105,4 +157,36 @@ void imprimir_tablero(casilla_t tablero[8][8]) {
     }
     printf("\n");
   }
+}
+
+int menu(){
+  char opcion[10];
+  while (1) {
+  printf("====== DAMAS INGLESAS =====\n");
+  printf("[1] Jugar\n[2] Creditos\n[3] Historial de victorias\n[4] Salir\n"); 
+  scanf("%s", opcion);
+
+  // Validar que sea un solo dígito entre '1' y '4'
+  if ((opcion[0] >= '1' && opcion[0] <= '4') && opcion[1] == '\0') {
+/*Convierto el caracter a entero y hago que la funcion regrese ese valor*/
+  int numero = atoi(opcion);
+      return numero;
+  }else{
+      printf("Entrada invalida. Ingrese un numero entre 1 y 4.\n");
+    sleep(1);
+    system("clear");
+    }
+  }
+}
+
+bool validarNombres(char *nombre){
+  for (int i = 0; i < strlen(nombre); i++) {
+        // analiza caracter por caracter y si no es letra ni espacio es invalido
+        if (!((nombre[i] >= 'a' && nombre[i] <= 'z') || 
+              (nombre[i] >= 'A' && nombre[i] <= 'Z') || 
+              nombre[i] == ' ')) {
+            return false;
+        }
+    }
+    return true;
 }
