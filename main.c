@@ -60,10 +60,30 @@ int main(){
         }
       }while(!esValido || strcmp(nombre1, nombre2) == 0);
 
-      // ya que los nombres se validan correctamente se muestra el tablero
-      system("clear");
-      casilla_t tablero[8][8];
+    // ya que los nombres se validan correctamente se muestra el tablero
+    system("clear");
+    casilla_t tablero[8][8];
     inicializar_tablero(tablero);
+
+    int turno = 1; // 1 para jugador 1, 2 para jugador 2
+    bool juegoActivo = true;
+    
+    while(juegoActivo) {
+        system("clear");
+        imprimir_tablero(tablero);
+        
+        if(turno == 1) {
+            printf("\nTurno de %s\n", nombre1);
+        } else {
+            printf("\nTurno de %s\n", nombre2);
+        }
+
+        if(turno == 1){
+          turno = 2;
+        }else{
+          turno = 1;
+        }
+      }
 
       break;
     case 2:
